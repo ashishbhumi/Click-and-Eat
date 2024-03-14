@@ -1,4 +1,4 @@
-import { useState ,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "../../clickandeat.jpeg";
 import { Link } from "react-router-dom";
 import useOnlinestatus from "../utils/useOnlineStatus";
@@ -26,16 +26,16 @@ const Header = () => {
 
   // call custom hook useOnline if user is online or not
   const isOnline = useOnline();
+  const Onlinestatus = useOnlinestatus();
 
   const [btnname, setstate] = useState("Login");
-  const Onlinestatus = useOnlinestatus();
 
   //Subscribing to thr cart using selector
   const cartItems = useSelector((store) => store.cart.items);
   console.log(cartItems);
 
   return (
-    <div className="flex justify-between  bg-pink-100 shadow-xl sm: lg:bg-blue-400 ">
+    <div className="flex justify-between shadow-xl bg-blue-400 ">
       <div className="logo-container">
         <Link to="/">
           <img className="w-48 m-4 p-4" src={Image} height={50} width={50} />
@@ -62,6 +62,7 @@ const Header = () => {
             <Link to="/grocery">Grocery Store</Link>
           </li>
           <li className="px-4  hover:bg-sky-700 hover:font-semibold hover:text-white rounded-lg">
+            {/* use conditional rendering for login and logout */}
             {isLoggedin ? (
               <button
                 className="logout-btn"
@@ -79,7 +80,7 @@ const Header = () => {
                 </span>
               </button>
             ) : (
-              <button className="login-btn" onClick={() => navigate("/login")}>
+              <button className="login-btn" onClick={() => navigate("/login") }>
                 Login
                 <span
                   className={isOnline ? "login-btn-green" : "login-btn-red"}
