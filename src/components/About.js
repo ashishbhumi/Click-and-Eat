@@ -18,7 +18,7 @@ class About extends React.Component{
   render(){
     //console.log("Parent render");
     return(
-        <div>
+        <div >
           <br/>
           <Userclass name={"Ashish Bhumi (Class)"} locationClass={"Bihar"} />
 

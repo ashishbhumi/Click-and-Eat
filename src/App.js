@@ -8,7 +8,7 @@ import ErrorPage from "./components/ErrorPage.js";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import RestaurentMenu from "./components/RestaurentMenu.js";
 import { Provider } from "react-redux";
-import appStore from "./utils/AppStore.js";
+import appStore from "./utils/appStore.js";
 import Cart from "./components/Cart.js";
 import Footer from "./components/Footer.js";
 
