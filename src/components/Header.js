@@ -1,10 +1,32 @@
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import Image from "../../clickandeat.jpeg";
 import { Link } from "react-router-dom";
 import useOnlinestatus from "../utils/useOnlineStatus";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../utils/useAuth";
+import useLocalStorage from "../utils/useLocalStorage";
+import useOnline from "../utils/useOnline";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  // call custom hook useLocalStorage for getting localStorage value of user
+  const [getLocalStorage, , clearLocalStorage] = useLocalStorage("user");
+
+  // call custom hook useAuth for user is loggedin or not
+  const [isLoggedin, setIsLoggedin] = useAuth();
+
+  useEffect(() => {
+    // if value of getLocalStorage is equal to null setIsLoggedin to false
+    if (getLocalStorage === null) {
+      setIsLoggedin(false);
+    }
+  }, [getLocalStorage]);
+
+  // call custom hook useOnline if user is online or not
+  const isOnline = useOnline();
+
   const [btnname, setstate] = useState("Login");
   const Onlinestatus = useOnlinestatus();
 
@@ -39,14 +61,35 @@ const Header = () => {
           <li className="px-4  hover:bg-sky-700 hover:font-semibold hover:text-white rounded-lg">
             <Link to="/grocery">Grocery Store</Link>
           </li>
-          <button
-            className="px-4  hover:bg-sky-700 hover:font-semibold hover:text-white rounded-lg "
-            onClick={() => {
-              btnname === "Login" ? setstate("Logout") : setstate("Login");
-            }}
-          >
-            {btnname}
-          </button>
+          <li className="px-4  hover:bg-sky-700 hover:font-semibold hover:text-white rounded-lg">
+            {isLoggedin ? (
+              <button
+                className="logout-btn"
+                onClick={() => {
+                  clearLocalStorage();
+                  setIsLoggedin(false);
+                }}
+              >
+                Logout
+                <span
+                  className={isOnline ? "login-btn-green" : "login-btn-red"}
+                >
+                  {" "}
+                  ●
+                </span>
+              </button>
+            ) : (
+              <button className="login-btn" onClick={() => navigate("/login")}>
+                Login
+                <span
+                  className={isOnline ? "login-btn-green" : "login-btn-red"}
+                >
+                  {" "}
+                  ●
+                </span>
+              </button>
+            )}
+          </li>
         </ul>
       </div>
     </div>

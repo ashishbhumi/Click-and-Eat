@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore.js";
 import Cart from "./components/Cart.js";
 import Footer from "./components/Footer.js";
+import Login from "./components/Login.js";
 
 
 //import Grocery from "./components/Grocery.js"
@@ -57,6 +58,11 @@ const approuter = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart/>,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
         errorElement: <ErrorPage />,
       },
       {
